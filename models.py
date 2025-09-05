@@ -66,14 +66,32 @@ class ActivationKeysModel(QAbstractTableModel):
                 return row["app_expired_date"]
             elif col == COL_ACTIONS:
                 return ""  # buttons live here via setIndexWidget
-        # Color the date cells based on expiry
+        # Color the date cells based on expiry with better visual indicators
         if role == Qt.ForegroundRole and (col in (COL_ACTIVATE_EXP, COL_APP_EXP)):
             text = self.data(self.index(index.row(), col), Qt.DisplayRole)
             try:
                 dt = datetime.strptime(text, "%Y-%m-%d %H:%M:%S")
-                return Qt.red if dt < datetime.now() else Qt.darkGreen
+                now = datetime.now()
+                if dt < now:
+                    return Qt.red  # Expired
+                elif (dt - now).days <= 7:
+                    return Qt.darkYellow  # Expiring soon (within 7 days)
+                else:
+                    return Qt.darkGreen  # Valid
             except Exception:
                 return None
+        
+        # Add background color for expired rows
+        if role == Qt.BackgroundRole:
+            row_data = self.rows[index.row()]
+            try:
+                activate_exp = datetime.strptime(row_data["activate_expired_date"], "%Y-%m-%d %H:%M:%S")
+                app_exp = datetime.strptime(row_data["app_expired_date"], "%Y-%m-%d %H:%M:%S")
+                now = datetime.now()
+                if activate_exp < now or app_exp < now:
+                    return Qt.lightGray  # Light gray background for expired keys
+            except Exception:
+                pass
         return None
 
     # Helpers for retrieving the full values by source row
