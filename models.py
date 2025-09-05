@@ -14,13 +14,13 @@ COL_APP_EXP = 5
 COL_ACTIONS = 6
 
 HEADERS = [
-    "ID (hidden)",
-    "Name",
-    "Key",
-    "Created Date",
-    "Activate Expired Date",
-    "App Expired Date",
-    "Actions",
+    "ID (ẩn)",
+    "Tên",
+    "Khóa",
+    "Ngày Tạo",
+    "Ngày Hết Hạn Kích Hoạt",
+    "Ngày Hết Hạn Ứng Dụng",
+    "Hành Động",
 ]
 
 

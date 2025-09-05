@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
 class AddKeyDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Generate New Key")
+        self.setWindowTitle("Tạo Khóa Mới")
         self.setModal(True)
 
         self.name_edit = QLineEdit()
@@ -29,10 +29,10 @@ class AddKeyDialog(QDialog):
         self.days_spin.setValue(30)
 
         form = QFormLayout()
-        form.addRow("Name", self.name_edit)
-        form.addRow("Secret Key", self.secret_edit)
-        form.addRow("TTL (seconds)", self.ttl_spin)
-        form.addRow("Validity Period (days)", self.days_spin)
+        form.addRow("Tên", self.name_edit)
+        form.addRow("Khóa Bí Mật", self.secret_edit)
+        form.addRow("TTL (giây)", self.ttl_spin)
+        form.addRow("Thời Hạn Hiệu Lực (ngày)", self.days_spin)
 
         btns = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         btns.accepted.connect(self.accept)
