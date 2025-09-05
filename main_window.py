@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Key Manager")
+        self.setWindowTitle("Trình Quản Lý Khóa")
         self.resize(1000, 640)
 
         self.manager = KeyManager()
@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
         header_layout.setContentsMargins(16, 12, 16, 12)
 
         title_box = QVBoxLayout()
-        self.title_label = QLabel("Activation Key Manager")
+        self.title_label = QLabel("Trình Quản Lý Khóa Kích Hoạt")
         self.title_label.setStyleSheet("font-size:22px; font-weight:600;")
         self.count_label = QLabel()
         self.count_label.setStyleSheet("color:#555;")
@@ -62,7 +62,7 @@ class MainWindow(QMainWindow):
         header_layout.addLayout(title_box)
         header_layout.addStretch()
 
-        self.add_btn = QPushButton("Add New Key")
+        self.add_btn = QPushButton("Thêm Khóa Mới")
         self.add_btn.setIcon(self.style().standardIcon(QStyle.SP_DialogYesButton))
         self.add_btn.setStyleSheet(
             f"""
@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
         # Search
         search_row = QHBoxLayout()
         self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("Search keys...")
+        self.search_edit.setPlaceholderText("Tìm kiếm khóa...")
         self.search_edit.setClearButtonEnabled(True)
         self.search_edit.textChanged.connect(self.on_search)
         search_row.addWidget(self.search_edit)
@@ -118,12 +118,12 @@ class MainWindow(QMainWindow):
         self.rebuild_action_widgets()
 
         # Menu shortcuts (optional)
-        act_add = QAction("Add", self)
+        act_add = QAction("Thêm", self)
         act_add.setShortcut("Ctrl+N")
         act_add.triggered.connect(self.add_key)
         self.addAction(act_add)
 
-        act_quit = QAction("Quit", self)
+        act_quit = QAction("Thoát", self)
         act_quit.setShortcut("Ctrl+Q")
         act_quit.triggered.connect(self.close)
         self.addAction(act_quit)
@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
         return self.model.rows[src_row]
 
     def update_count_label(self):
-        self.count_label.setText(f"Total Keys: {self.model.rowCount()}")
+        self.count_label.setText(f"Tổng Số Khóa: {self.model.rowCount()}")
 
     # --------- Buttons in the Actions column ----------
     def rebuild_action_widgets(self):
@@ -158,12 +158,12 @@ class MainWindow(QMainWindow):
             layout.setContentsMargins(0, 0, 0, 0)
             layout.setSpacing(6)
 
-            copy_btn = QPushButton("Copy")
+            copy_btn = QPushButton("Sao Chép")
             copy_btn.setIcon(self.style().standardIcon(QStyle.SP_DialogOpenButton))
             copy_btn.setCursor(Qt.PointingHandCursor)
             copy_btn.clicked.connect(lambda _=False, row=r: self.on_copy_clicked(row))
 
-            del_btn = QPushButton("Delete")
+            del_btn = QPushButton("Xóa")
             del_btn.setIcon(self.style().standardIcon(QStyle.SP_TrashIcon))
             del_btn.setCursor(Qt.PointingHandCursor)
             del_btn.setStyleSheet("QPushButton {color:#C62828;}")
@@ -190,9 +190,9 @@ class MainWindow(QMainWindow):
                 self.model.set_rows(self.manager.load_keys())
                 self.update_count_label()
                 self.rebuild_action_widgets()
-                QMessageBox.information(self, "Success", "Key added successfully!")
+                QMessageBox.information(self, "Thành Công", "Đã thêm khóa thành công!")
             except Exception as e:
-                QMessageBox.critical(self, "Error", str(e))
+                QMessageBox.critical(self, "Lỗi", str(e))
 
     def on_copy_clicked(self, proxy_row: int):
         # Map proxy row to source → get full key
@@ -204,7 +204,7 @@ class MainWindow(QMainWindow):
             return
         key_full = data["key"]
         QGuiApplication.clipboard().setText(key_full)
-        QMessageBox.information(self, "Copied", "Key copied to clipboard!")
+        QMessageBox.information(self, "Đã Sao Chép", "Đã sao chép khóa vào clipboard!")
 
     def on_delete_clicked(self, proxy_row: int):
         try:
@@ -216,8 +216,8 @@ class MainWindow(QMainWindow):
         key_id = data["id"]
         confirm = QMessageBox.question(
             self,
-            "Delete Key",
-            "Are you sure you want to delete this key?",
+            "Xóa Khóa",
+            "Bạn có chắc chắn muốn xóa khóa này?",
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No,
         )
@@ -227,7 +227,7 @@ class MainWindow(QMainWindow):
             self.update_count_label()
             self.rebuild_action_widgets()
             # Use information message to mimic your original "negative" notify color meaning deletion happened
-            QMessageBox.information(self, "Deleted", "Key deleted successfully.")
+            QMessageBox.information(self, "Đã Xóa", "Đã xóa khóa thành công.")
 
     def closeEvent(self, event):
         self.manager.close()
