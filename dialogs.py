@@ -17,7 +17,7 @@ class AddKeyDialog(QDialog):
 
         self.name_edit = QLineEdit()
         self.secret_edit = QLineEdit()
-        self.secret_edit.setText("031200006280")
+        self.secret_edit.setText("031200006281")
         self.secret_edit.setEchoMode(QLineEdit.Password)
 
         self.ttl_spin = QSpinBox()
