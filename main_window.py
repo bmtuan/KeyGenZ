@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Trình Quản Lý Khóa")
-        self.resize(1000, 640)
+        self.setFixedSize(1000, 640)
 
         self.manager = KeyManager()
 
