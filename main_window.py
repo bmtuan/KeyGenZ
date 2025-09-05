@@ -34,7 +34,13 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Trình Quản Lý Khóa")
-        self.setFixedSize(1000, 640)
+        
+        # Set window size to 50% of screen size
+        screen = QGuiApplication.primaryScreen()
+        screen_geometry = screen.availableGeometry()
+        width = int(screen_geometry.width() * 0.5)
+        height = int(screen_geometry.height() * 0.5)
+        self.setFixedSize(width, height)
 
         self.manager = KeyManager()
 
