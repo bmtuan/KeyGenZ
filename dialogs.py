@@ -30,9 +30,8 @@ class AddKeyDialog(QDialog):
 
         form = QFormLayout()
         form.addRow("Tên", self.name_edit)
-        form.addRow("Khóa Bí Mật", self.secret_edit)
-        form.addRow("TTL (giây)", self.ttl_spin)
-        form.addRow("Thời Hạn Hiệu Lực (ngày)", self.days_spin)
+        form.addRow("Thời hạn kích hoạt khóa (giây)", self.ttl_spin)
+        form.addRow("Thời hạn ứng dụng (ngày)", self.days_spin)
 
         btns = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         btns.accepted.connect(self.accept)
